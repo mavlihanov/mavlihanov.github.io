@@ -25,7 +25,7 @@ nav{position:sticky;top:0;z-index:20;background:rgba(5,5,6,.78);backdrop-filter:
 .hero-mark{justify-self:end;align-self:end;text-align:right;font-family:Oswald,sans-serif;text-transform:uppercase;letter-spacing:3px;color:rgba(255,255,255,.65);font-size:12px;line-height:1.7;transform:translateX(-35px)}.hero-mark strong{display:block;color:#fff;font-size:22px;letter-spacing:2px}.hero-mark span{color:var(--red2)}
 section{padding:92px 0;border-top:1px solid #19191d}.section-title{font-family:Oswald,sans-serif;text-transform:uppercase;font-size:42px;letter-spacing:1px;margin:0 0 10px}.section-title:before{content:"// ";color:var(--red)}.sub{color:#77777f;margin:0 0 30px;font-size:16px}
 .about-grid{display:grid;grid-template-columns:390px minmax(0,1fr);gap:42px;align-items:center}.about-art{position:relative;padding:12px}.about-art:before{content:"";position:absolute;inset:0;border:1px solid rgba(227,19,27,.65);transform:skewY(-2deg);box-shadow:0 0 45px rgba(227,19,27,.12)}.about-art:after{content:"MAVLIHANOV";position:absolute;left:-12px;bottom:22px;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:4px;color:#fff;background:var(--red);padding:7px 11px}.about-art img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;object-position:center;position:relative;filter:saturate(1.08) contrast(1.06)}.about-copy{max-width:760px}.about-copy p{color:#b9b9bf;font-size:19px;line-height:1.65;margin:0 0 20px}.chips{display:flex;gap:10px;flex-wrap:wrap}.chip{border:1px solid #34343a;padding:8px 12px;text-transform:uppercase;font-family:Oswald,sans-serif;font-size:12px;letter-spacing:1px;color:#ddd;background:#0c0c0f;text-decoration:none}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.card{background:linear-gradient(135deg,#111114,#0a0a0c);border:1px solid var(--line);padding:26px;position:relative;overflow:hidden;min-height:135px}.card:after{content:"";position:absolute;right:-35px;bottom:-55px;width:130px;height:130px;border:1px solid rgba(227,19,27,.28);transform:rotate(45deg)}.num{font-family:Oswald,sans-serif;font-size:44px}.label{color:#8f8f96;font-size:14px;margin-top:5px}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}  .platform-stats{ background:linear-gradient(135deg,#111114,#0a0a0c); border:1px solid var(--line); padding:26px; position:relative; overflow:hidden; min-height:220px; }  .platform-stats:after{ content:""; position:absolute; right:-35px; bottom:-55px; width:130px; height:130px; border:1px solid rgba(227,19,27,.28); transform:rotate(45deg); }  .platform-stats h3{ font-family:Oswald,sans-serif; font-size:23px; text-transform:uppercase; letter-spacing:1px; margin:0 0 22px; position:relative; z-index:1; }  .metric-main{ font-family:Oswald,sans-serif; font-size:48px; line-height:1; position:relative; z-index:1; }  .metric-main-label{ color:#77777f; font-size:13px; text-transform:uppercase; letter-spacing:1px; margin-top:7px; position:relative; z-index:1; }  .metric-row{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-top:24px; position:relative; z-index:1; }  .metric-row div{ min-width:0; }  .metric-row strong{ display:block; font-family:Oswald,sans-serif; font-size:25px; line-height:1; }  .metric-row span{ display:block; color:#77777f; font-size:12px; line-height:1.35; margin-top:6px; }
 .platforms{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}.platform{background:#0d0d10;border:1px solid var(--line);padding:24px;text-decoration:none;min-height:150px;transition:.2s;position:relative;overflow:hidden}.platform:before{content:"";position:absolute;left:0;top:0;width:4px;height:100%;background:var(--red);transform:scaleY(0);transform-origin:bottom;transition:.2s}.platform:hover{border-color:#555;transform:translateY(-3px)}.platform:hover:before{transform:scaleY(1)}.platform b{font-family:Oswald,sans-serif;font-size:23px;text-transform:uppercase}.platform span{display:block;color:#888;margin-top:12px;line-height:1.5}
 table{width:100%;border-collapse:collapse;background:#0c0c0f;border:1px solid var(--line)}td{padding:19px;border-bottom:1px solid #222227}tr:last-child td{border-bottom:0}td:last-child{text-align:right;font-family:Oswald,sans-serif;font-size:20px;color:#fff;white-space:nowrap}.price-note{color:#777;font-size:13px;margin-top:13px}
 .contact{display:grid;grid-template-columns:1fr 1fr;gap:20px}.contactbox{background:#101014;border:1px solid var(--line);padding:26px}.contactbox a{text-decoration:none;color:#fff}.contactbox a:hover{color:var(--red2)}
@@ -76,16 +76,45 @@ footer{padding:32px 0 48px;border-top:1px solid #19191d;color:#666;font-size:12p
 
 <section id="stats"><div class="wrap">
 <h2 class="section-title">Основные метрики</h2><p class="sub">Последние 28 дней · по предоставленной статистике</p>
+
 <div class="stats">
-<div class="card"><div class="num">9,4K</div><div class="label">TikTok — просмотры публикаций</div></div>
-<div class="card"><div class="num">7,1K</div><div class="label">YouTube — просмотры</div></div>
-<div class="card"><div class="num">+26</div><div class="label">YouTube — новые подписчики</div></div>
-<div class="card"><div class="num">277</div><div class="label">TikTok — лайки</div></div>
-<div class="card"><div class="num">59</div><div class="label">TikTok — репосты</div></div>
-<div class="card"><div class="num">28</div><div class="label">TikTok — комментарии</div></div>
+
+<div class="platform-stats">
+<h3>YouTube</h3>
+<div class="metric-main">—</div>
+<div class="metric-main-label">подписчиков</div>
+<div class="metric-row">
+<div><strong>7,1K</strong><span>просмотров за 28 дней</span></div>
+<div><strong>+26</strong><span>новых подписчиков</span></div>
+</div>
+</div>
+
+<div class="platform-stats">
+<h3>TikTok</h3>
+<div class="metric-main">—</div>
+<div class="metric-main-label">подписчиков</div>
+<div class="metric-row">
+<div><strong>9,4K</strong><span>просмотров за 28 дней</span></div>
+<div><strong>277</strong><span>лайков</span></div>
+<div><strong>59</strong><span>репостов</span></div>
+<div><strong>28</strong><span>комментариев</span></div>
+</div>
+</div>
+
+<div class="platform-stats">
+<h3>Twitch</h3>
+<div class="metric-main">≈50</div>
+<div class="metric-main-label">фолловеров</div>
+<div class="metric-row">
+<div><strong>+40</strong><span>новых фолловеров</span></div>
+<div><strong>1,3K</strong><span>просмотров трансляций</span></div>
+<div><strong>≈2,3</strong><span>средний онлайн</span></div>
+<div><strong>10</strong><span>пиковый онлайн</span></div>
+</div>
+</div>
+
 </div>
 </div></section>
-
 <section><div class="wrap">
 <h2 class="section-title">Площадки</h2><p class="sub">Контент и связь</p>
 <div class="platforms">
