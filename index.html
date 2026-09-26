@@ -70,52 +70,47 @@ footer{padding:32px 0 48px;border-top:1px solid #19191d;color:#666;font-size:12p
 <a class="chip" href="https://www.twitch.tv/mavlihanov" target="_blank">Twitch</a>
 <a class="chip" href="https://t.me/givemeleanplease" target="_blank">Telegram</a>
 </div>
-</div>
-</div>
 </div></section>
 
 <section id="stats"><div class="wrap">
-<h2 class="section-title">Основные метрики</h2><p class="sub">Последние 28 дней · по предоставленной статистике</p>
+<h2 class="section-title">Основные метрики</h2>
+<p class="sub" id="stats-period">Последние 28 дней · по предоставленной статистике</p>
 
 <div class="stats">
 
 <div class="platform-stats">
 <h3>YouTube</h3>
-<div class="metric-main">—</div>
+<div class="metric-main" id="youtube-subscribers">—</div>
 <div class="metric-main-label">подписчиков</div>
 <div class="metric-row">
-<div><strong>7,1K</strong><span>просмотров за 28 дней</span></div>
-<div><strong>+26</strong><span>новых подписчиков</span></div>
+<div><strong id="youtube-views">—</strong><span>просмотров за 28 дней</span></div>
+<div><strong id="youtube-new-subs">—</strong><span>новых подписчиков</span></div>
 </div>
 </div>
 
 <div class="platform-stats">
 <h3>TikTok</h3>
-<div class="metric-main">—</div>
+<div class="metric-main" id="tiktok-followers">—</div>
 <div class="metric-main-label">подписчиков</div>
 <div class="metric-row">
-<div><strong>9,4K</strong><span>просмотров за 28 дней</span></div>
-<div><strong>277</strong><span>лайков</span></div>
-<div><strong>59</strong><span>репостов</span></div>
-<div><strong>28</strong><span>комментариев</span></div>
+<div><strong id="tiktok-views">—</strong><span>просмотров за 28 дней</span></div>
+<div><strong id="tiktok-likes">—</strong><span>лайков</span></div>
+<div><strong id="tiktok-shares">—</strong><span>репостов</span></div>
+<div><strong id="tiktok-comments">—</strong><span>комментариев</span></div>
 </div>
 </div>
 
 <div class="platform-stats">
 <h3>Twitch</h3>
-<div class="metric-main">≈50</div>
+<div class="metric-main" id="twitch-followers">—</div>
 <div class="metric-main-label">фолловеров</div>
 <div class="metric-row">
-<div><strong>+40</strong><span>новых фолловеров</span></div>
-<div><strong>1,3K</strong><span>просмотров трансляций</span></div>
-<div><strong>≈2,3</strong><span>средний онлайн</span></div>
-<div><strong>10</strong><span>пиковый онлайн</span></div>
+<div><strong id="twitch-new-followers">—</strong><span>новых фолловеров</span></div>
+<div><strong id="twitch-views">—</strong><span>просмотров трансляций</span></div>
+<div><strong id="twitch-average">—</strong><span>средний онлайн</span></div>
+<div><strong id="twitch-peak">—</strong><span>пиковый онлайн</span></div>
 </div>
 </div>
-
-</div>
-</div></section>
-
 
 </div>
 </div></section>
@@ -168,5 +163,53 @@ footer{padding:32px 0 48px;border-top:1px solid #19191d;color:#666;font-size:12p
 </div></section>
 </main>
 <footer>MAVLIHANOV · PRESS KIT · 2026</footer>
+<script>
+fetch('stats.json')
+  .then(response => response.json())
+  .then(data => {
+    document.getElementById('stats-period').textContent =
+      data.period + ' · по предоставленной статистике';
+
+    document.getElementById('youtube-subscribers').textContent =
+      data.youtube.subscribers || '—';
+    document.getElementById('youtube-views').textContent =
+      formatNumber(data.youtube.views);
+    document.getElementById('youtube-new-subs').textContent =
+      '+' + data.youtube.newSubscribers;
+
+    document.getElementById('tiktok-followers').textContent =
+      data.tiktok.followers || '—';
+    document.getElementById('tiktok-views').textContent =
+      formatNumber(data.tiktok.views);
+    document.getElementById('tiktok-likes').textContent =
+      formatNumber(data.tiktok.likes);
+    document.getElementById('tiktok-shares').textContent =
+      formatNumber(data.tiktok.shares);
+    document.getElementById('tiktok-comments').textContent =
+      formatNumber(data.tiktok.comments);
+
+    document.getElementById('twitch-followers').textContent =
+      data.twitch.followers || '—';
+    document.getElementById('twitch-new-followers').textContent =
+      '+' + data.twitch.newFollowers;
+    document.getElementById('twitch-views').textContent =
+      formatNumber(data.twitch.views);
+    document.getElementById('twitch-average').textContent =
+      '≈' + data.twitch.averageViewers;
+    document.getElementById('twitch-peak').textContent =
+      data.twitch.peakViewers;
+  })
+  .catch(error => {
+    console.error('Ошибка загрузки статистики:', error);
+  });
+
+function formatNumber(number) {
+  if (number >= 1000) {
+    return (number / 1000).toFixed(1).replace('.0', '') + 'K';
+  }
+
+  return number;
+}
+</script>
 </body>
 </html>
