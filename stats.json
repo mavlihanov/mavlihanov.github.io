@@ -1,0 +1,25 @@
+{
+  "period": "Последние 28 дней",
+
+  "youtube": {
+    "subscribers": 0,
+    "views": 7100,
+    "newSubscribers": 26
+  },
+
+  "tiktok": {
+    "followers": 0,
+    "views": 9400,
+    "likes": 277,
+    "comments": 28,
+    "shares": 59
+  },
+
+  "twitch": {
+    "followers": 50,
+    "newFollowers": 40,
+    "views": 1331,
+    "averageViewers": 2.3,
+    "peakViewers": 10
+  }
+}
