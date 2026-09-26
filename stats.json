@@ -1,25 +1,75 @@
 {
-  "period": "Последние 28 дней",
+  "periods": {
+    "day": {
+      "label": "Последний доступный день",
+      "youtube": {
+        "views": 99,
+        "newSubscribers": 1
+      },
+      "tiktok": {
+        "views": 552,
+        "likes": 11,
+        "shares": 9,
+        "comments": 0
+      },
+      "twitch": {
+        "views": 17,
+        "newFollowers": 0,
+        "averageViewers": 1.25,
+        "peakViewers": 4
+      }
+    },
+
+    "week": {
+      "label": "Последние 7 дней",
+      "youtube": {
+        "views": 162,
+        "newSubscribers": 2
+      },
+      "tiktok": {
+        "views": 3000,
+        "likes": 104,
+        "shares": 29,
+        "comments": 6
+      },
+      "twitch": {
+        "views": 125,
+        "newFollowers": 1,
+        "averageViewers": 1.44,
+        "peakViewers": 6
+      }
+    },
+
+    "month": {
+      "label": "Последние 28 дней",
+      "youtube": {
+        "views": 7253,
+        "newSubscribers": 27
+      },
+      "tiktok": {
+        "views": 9400,
+        "likes": 277,
+        "shares": 59,
+        "comments": 28
+      },
+      "twitch": {
+        "views": 1331,
+        "newFollowers": 40,
+        "averageViewers": 2.3,
+        "peakViewers": 10
+      }
+    }
+  },
 
   "youtube": {
-    "subscribers": 0,
-    "views": 7100,
-    "newSubscribers": 26
+    "subscribers": 31
   },
 
   "tiktok": {
-    "followers": 0,
-    "views": 9400,
-    "likes": 277,
-    "comments": 28,
-    "shares": 59
+    "followers": 22
   },
 
   "twitch": {
-    "followers": 49,
-    "newFollowers": 40,
-    "views": 1331,
-    "averageViewers": 2.3,
-    "peakViewers": 10
+    "followers": 49
   }
 }
