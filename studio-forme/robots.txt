@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://mavlihanov.github.io/studio-forme/sitemap.xml

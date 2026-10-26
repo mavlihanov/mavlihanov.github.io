@@ -1,0 +1,10 @@
+{
+  "name": "studio-forme",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "check": "node --check src/app.js && node --check src/components.mjs && node --check src/template.mjs && node scripts/validate.mjs"
+  }
+}
