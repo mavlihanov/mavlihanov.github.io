@@ -9,6 +9,9 @@ const output = path.join(project, 'github-publication');
 const siteDirectory = path.join(output, 'studio-forme');
 const sourceDirectory = path.join(siteDirectory, 'source');
 const env = { ...process.env, SITE_URL: siteUrl };
+const catalogData = JSON.parse(await readFile(path.join(project, 'data/catalog.json'), 'utf8'));
+const procedureCount = catalogData.categories.reduce((sum, category) => sum + category.services.length, 0);
+const variantCount = catalogData.categories.flatMap(category => category.services).reduce((sum, service) => sum + service.variants.length, 0);
 for (const script of ['scripts/build.mjs', 'scripts/validate.mjs']) {
   const result = spawnSync(process.execPath, [script], { cwd: project, env, stdio: 'inherit' });
   if (result.status !== 0) process.exit(result.status || 1);
@@ -32,7 +35,7 @@ seo.origin = siteUrl;
 await writeFile(path.join(sourceDirectory, 'data/seo.json'), JSON.stringify(seo, null, 2) + '\n');
 await writeFile(path.join(output, '.nojekyll'), '');
 await writeFile(path.join(output, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${siteUrl}/sitemap.xml\n`);
-await writeFile(path.join(siteDirectory, 'README.md'), `# Студия Форме\n\nСайт: ${siteUrl}/\n\nСтатический сайт салона: 9 категорий, 49 процедур, 55 вариантов продолжительности и цены. Запись: https://t.me/SYRA100.\n\nГотовые файлы сайта находятся в этой папке. Исходные компоненты, каталог, сборка и проверки — в папке source. Установка зависимостей не требуется.\n\n## Обновление\n\nВ папке source выполните npm run build и npm run check. После успешной проверки перенесите содержимое source/dist в родительскую папку studio-forme и отправьте изменения в main. GitHub Pages публикует статические файлы из корня main.\n\nФайл _headers относится к исходному хостингу и не применяется на GitHub Pages. Свои серверные обработчики, вход в ChatGPT, внешние шрифты и сторонние скрипты сайту не требуются.\n\nОбложка создана ImageGen как редакционный образ бренда; она не изображает помещение, сотрудника или результат процедуры. Лицензии шрифтов находятся в assets/FONT_LICENSES.txt.\n`);
+await writeFile(path.join(siteDirectory, 'README.md'), `# Студия Форме\n\nСайт: ${siteUrl}/\n\nСтатический сайт салона: ${catalogData.categories.length} категорий, ${procedureCount} процедур, ${variantCount} вариант продолжительности и цены. Запись: https://t.me/SYRA100.\n\nГотовые файлы сайта находятся в этой папке. Исходные компоненты, каталог, сборка и проверки — в папке source. Установка зависимостей не требуется.\n\n## Обновление\n\nВ папке source выполните npm run build и npm run check. После успешной проверки перенесите содержимое source/dist в родительскую папку studio-forme и отправьте изменения в main. GitHub Pages публикует статические файлы из корня main.\n\nФайл _headers относится к исходному хостингу и не применяется на GitHub Pages. Свои серверные обработчики, вход в ChatGPT, внешние шрифты и сторонние скрипты сайту не требуются.\n\nОбложка создана ImageGen как редакционный образ бренда; она не изображает помещение, сотрудника или результат процедуры. Лицензии шрифтов находятся в assets/FONT_LICENSES.txt.\n`);
 const files = [];
 async function collect(directory, prefix = '') {
   for (const item of (await readdir(directory, { withFileTypes: true })).sort((a, b) => a.name.localeCompare(b.name))) {

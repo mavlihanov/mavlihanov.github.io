@@ -21,12 +21,17 @@ export function booking(label = 'Записаться в Telegram', className = 
 }
 
 const formatMoney = price => new Intl.NumberFormat('ru-RU').format(price);
+const formatVariantPrice = variant => `${variant.priceFrom ? 'от ' : ''}${formatMoney(variant.price)}`;
+const positionCount = count => `${count} ${{one:'позиция',few:'позиции',many:'позиций',other:'позиции'}[new Intl.PluralRules('ru-RU').select(count)]}`;
 
 export function serviceRow(service) {
   const minutes = service.variants.map(v => v.minutes).filter(v => v !== null);
   const duration = minutes.length ? `${minutes.join(' / ')} мин` : 'Уточним';
-  const price = service.variants.map(v => formatMoney(v.price)).join(' / ') + ' ₽';
-  const variants = service.variants.length > 1 ? `<div class="service-variants">${service.variants.map(v => `<span><b>${v.minutes} мин</b><span>${formatMoney(v.price)} ₽</span></span>`).join('')}</div>` : '';
+  const namedOptions = service.variants.some(variant => variant.label);
+  const price = (namedOptions ? `от ${formatMoney(Math.min(...service.variants.map(variant => variant.price)))}` : service.variants.map(formatVariantPrice).join(' / ')) + ' ₽';
+  const variants = namedOptions
+    ? `<dl class="service-options">${service.variants.map(variant => `<div><dt>${escapeHtml(variant.label)}</dt><dd>${formatVariantPrice(variant)} ₽</dd></div>`).join('')}</dl>`
+    : service.variants.length > 1 ? `<div class="service-variants">${service.variants.map(v => `<span><b>${v.minutes} мин</b><span>${formatVariantPrice(v)} ₽</span></span>`).join('')}</div>` : '';
   const unknownTime = minutes.length === 0 ? '<p class="service-time-note">Продолжительность уточняется при записи.</p>' : '';
   return `<details class="service" data-accordion data-service="${service.id}">
     <summary><span class="service-name">${escapeHtml(service.name)}</span><span class="service-duration" ${minutes.length ? '' : 'title="Продолжительность уточняется при записи"'}><span class="sr-only">Время: </span>${duration}</span><span class="service-price"><span class="sr-only">Стоимость: </span>${price}</span><span class="service-chevron">${icons.down}</span></summary>
@@ -34,18 +39,18 @@ export function serviceRow(service) {
   </details>`;
 }
 
-export function catalog(categories) {
+export function catalog(categories, basePath = '') {
   const nav = categories.map((c, index) => `<a href="#category-${c.id}" class="category-link" data-category="${c.id}" aria-controls="category-${c.id}"><span class="category-number" aria-hidden="true">${String(index+1).padStart(2,'0')}</span><span class="category-name">${escapeHtml(c.name)}</span><span class="category-indicator" aria-hidden="true">${icons.down}</span></a>`).join('');
   const panels = categories.map((c, index) => {
     const groups = [...new Set(c.services.map(s => s.group || ''))];
     return `<section class="category-panel" id="category-${c.id}" data-panel="${c.id}" aria-labelledby="heading-${c.id}">
-      <div class="panel-heading"><div><span class="eyebrow">НАПРАВЛЕНИЕ ${String(index+1).padStart(2,'0')}</span><h3 id="heading-${c.id}" tabindex="-1">${escapeHtml(c.name)}</h3></div><span class="panel-count" aria-label="${c.services.length} позиций">${String(c.services.length).padStart(2,'0')}</span></div>
-      <p class="panel-intro">${escapeHtml(c.intro)}</p>
+      <div class="panel-heading"><div><span class="eyebrow">НАПРАВЛЕНИЕ ${String(index+1).padStart(2,'0')}</span><h3 id="heading-${c.id}" tabindex="-1">${escapeHtml(c.name)}</h3></div><span class="panel-count" aria-label="${positionCount(c.services.length)}">${String(c.services.length).padStart(2,'0')}</span></div>
+      <div class="panel-intro-row"><p class="panel-intro">${escapeHtml(c.intro)}</p>${c.priceList ? `<a class="price-sheet-link" href="${basePath}/${escapeHtml(c.priceList)}" target="_blank" rel="noopener noreferrer">Прайс мастера ${icons.arrow}<span class="sr-only"> — откроется в новой вкладке</span></a>` : ''}</div>
       <div class="catalog-columns" aria-hidden="true"><span>ПРОЦЕДУРА</span><span>ВРЕМЯ</span><span>СТОИМОСТЬ</span><span></span></div>
       ${groups.map(group => `<div class="service-group">${group ? `<h4 class="service-group-heading">${escapeHtml(group)}</h4>` : ''}${c.services.filter(s => (s.group || '') === group).map(s => serviceRow(s)).join('')}</div>`).join('')}
     </section>`;
   }).join('');
-  return `<div class="catalog-layout"><nav class="category-nav" id="category-picker" aria-label="Категории услуг">${nav}</nav><div class="catalog-main" id="selected-services"><div class="catalog-toolbar"><span data-current-category>${escapeHtml(categories[0].name)}</span><a href="#category-picker" data-catalog-back>${icons.grid} Все категории <span aria-hidden="true">↑</span></a></div><p class="sr-only" id="category-status" role="status" aria-live="polite" aria-atomic="true"></p><div id="catalog-panels">${panels}</div><p class="catalog-note">Если время не указано в прайсе, уточним его при записи. При двух вариантах цена соответствует выбранной продолжительности.</p></div></div>`;
+  return `<div class="catalog-layout"><nav class="category-nav" id="category-picker" aria-label="Категории услуг">${nav}</nav><div class="catalog-main" id="selected-services"><div class="catalog-toolbar"><span data-current-category>${escapeHtml(categories[0].name)}</span><a href="#category-picker" data-catalog-back>${icons.grid} Все категории <span aria-hidden="true">↑</span></a></div><p class="sr-only" id="category-status" role="status" aria-live="polite" aria-atomic="true"></p><div id="catalog-panels">${panels}</div><p class="catalog-note">Продолжительность и цены с пометкой «от» уточним при записи. В раскрывающейся строке указаны описание и варианты стоимости — по длине волос или времени процедуры.</p></div></div>`;
 }
 
 export function faqRow(question, answer) {
